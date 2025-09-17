@@ -17,7 +17,7 @@ class KerusakanScreen extends StatefulWidget {
 class _KerusakanScreenState extends State<KerusakanScreen> with RouteAware {
   String selectedStatus = 'Pending';
   DateTimeRange? selectedDateRange;
-  final dateFormat = DateFormat('dd/MM/yyyy');
+  final dateFormat = DateFormat('dd-MM-yyyy');
 
   int currentPage = 1;
   int itemsPerPage = 5;
@@ -26,7 +26,7 @@ class _KerusakanScreenState extends State<KerusakanScreen> with RouteAware {
     if (tanggal == null || tanggal.isEmpty) return '-';
     try {
       final dt = DateTime.parse(tanggal);
-      return DateFormat('dd-MM-yyyy').format(dt); 
+      return dateFormat.format(dt); 
     } catch (e) {
       return tanggal;
     }

@@ -8,6 +8,7 @@ import 'package:damagereports/service/service_http_client.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_map/flutter_map.dart';
+import 'package:intl/intl.dart';
 import 'package:latlong2/latlong.dart';
 import 'package:url_launcher/url_launcher.dart';
 
@@ -24,6 +25,7 @@ class _KerusakanDetailScreenState extends State<KerusakanDetailScreen> {
   final GlobalKey _cardKey = GlobalKey();
   double _cardHeight = 160;
   Marker? _marker;
+  final dateFormat = DateFormat('dd-MM-yyyy');
   late String currentStatus;
   final KerusakanRepository repository = KerusakanRepository(
     ServiceHttpClient(),
@@ -48,6 +50,16 @@ class _KerusakanDetailScreenState extends State<KerusakanDetailScreen> {
 
     WidgetsBinding.instance.addPostFrameCallback((_) => _updateCardHeight());
     currentStatus = widget.kerusakan.status;
+  }
+
+    String formatTanggal(String? tanggal) {
+    if (tanggal == null || tanggal.isEmpty) return '-';
+    try {
+      final dt = DateTime.parse(tanggal);
+      return dateFormat.format(dt); 
+    } catch (e) {
+      return tanggal;
+    }
   }
 
   void _updateCardHeight() {
@@ -223,8 +235,8 @@ class _KerusakanDetailScreenState extends State<KerusakanDetailScreen> {
                               ),
                             ),
                             const SizedBox(height: 4),
-                            Text(
-                              widget.kerusakan.tanggal ?? "-",
+                             Text(
+                              formatTanggal(widget.kerusakan.tanggal),
                               style: const TextStyle(fontSize: 14),
                             ),
                             const SizedBox(height: 4),

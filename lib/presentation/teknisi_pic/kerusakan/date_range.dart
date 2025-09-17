@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 
 Future<DateTimeRange?> showCustomCupertinoDateRangePicker({
   required BuildContext context,
@@ -13,6 +14,17 @@ Future<DateTimeRange?> showCustomCupertinoDateRangePicker({
   DateTime endDate = currentRange?.end ?? today;
 
   bool isSelectingStart = true; 
+  final dateFormat = DateFormat('dd-MM-yyyy');
+
+  String formatTanggal(String? tanggal) {
+    if (tanggal == null || tanggal.isEmpty) return '-';
+    try {
+      final dt = DateTime.parse(tanggal);
+      return dateFormat.format(dt); 
+    } catch (e) {
+      return tanggal;
+    }
+  }
 
   return await showCupertinoModalPopup<DateTimeRange>(
     context: context,
@@ -69,8 +81,12 @@ Future<DateTimeRange?> showCustomCupertinoDateRangePicker({
               Padding(
                 padding: const EdgeInsets.all(8.0),
                 child: Text(
-                  "Rentang: ${startDate.toString().split(' ')[0]} - ${endDate.toString().split(' ')[0]}",
-                  style: const TextStyle(fontSize: 12, color: Colors.black54, decoration: TextDecoration.none,),
+                  "Rentang: ${formatTanggal(startDate.toString())} s/d ${formatTanggal(endDate.toString())}",
+                  style: const TextStyle(
+                    fontSize: 12,
+                    color: Colors.black54,
+                    decoration: TextDecoration.none,
+                  ),
                 ),
               ),
               Row(
