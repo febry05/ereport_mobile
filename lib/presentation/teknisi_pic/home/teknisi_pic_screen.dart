@@ -70,7 +70,7 @@ class _TeknisiPicScreenState extends State<TeknisiPicScreen> {
     return Scaffold(
       body: halamanContent(),
       bottomNavigationBar: SizedBox(
-        height: 60,
+        height: 90,
         child: BottomNavigationBar(
           currentIndex: pilihIndex,
           onTap: pilihHalaman,
